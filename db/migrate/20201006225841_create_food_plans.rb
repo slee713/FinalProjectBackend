@@ -1,7 +1,7 @@
 class CreateFoodPlans < ActiveRecord::Migration[6.0]
   def change
     create_table :food_plans do |t|
-      t.integer :user_hikes_id
+      t.integer :user_hike_id
       t.date :day
       t.string :breakfast
       t.string :lunch

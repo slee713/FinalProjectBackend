@@ -14,4 +14,8 @@ class User < ApplicationRecord
     has_many :questions
     has_many :answers
     has_many :likes
+
+    validates :username, :password, :email, :first_name, :last_name, presence: true
+    validates :username, uniqueness: {case_sensitive: false}
+    validates :email, uniqueness: {case_sensitive: false} 
 end

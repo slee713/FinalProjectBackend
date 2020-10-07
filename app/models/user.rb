@@ -5,9 +5,9 @@ class User < ApplicationRecord
     has_many :friends, through: :friendships
 
     has_many :user_hikes
-    # has_many :hiking_trips, through: :user_hikes
-    # has_many :food_plans, through: :user_hikes
-    # has_many :group_gear_items, through: :user_hikes
+    has_many :hiking_trips, through: :user_hikes
+    has_many :food_plans, through: :user_hikes
+    has_many :group_gear_items, through: :user_hikes
     
     has_many :personal_gear_items
 

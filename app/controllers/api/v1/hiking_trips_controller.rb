@@ -7,9 +7,10 @@ class Api::V1::HikingTripsController < ApplicationController
 
         if hiking_trip.valid?
             hiking_trip.save
-            render json: {message: 'Hiking Trip Successfully Created!'} 
+            render json: hiking_trip
         else 
-            render json: {error: hiking_trip.errors.full_messages.join(';')}       
+            render json: {error: hiking_trip.errors.full_messages.join(';')}   
+        end    
     end
 
 

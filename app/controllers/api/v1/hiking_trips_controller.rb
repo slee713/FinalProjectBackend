@@ -22,6 +22,19 @@ class Api::V1::HikingTripsController < ApplicationController
         end    
     end
 
+    def update
+        hiking_trip = HikingTrip.find(params[:id])
+        hiking_trip.assign_attributes(hiking_trip_params)
+
+        if hiking_trip.valid?
+            hiking_trip.save
+            render json: hiking_trip, include: [:users => {except: [:created_at, :updated_at]}, :stops => {except: [:created_at, :updated_at]}, 
+            :group_gear_items => {except: [:created_at, :updated_at]}]
+        else 
+            render json: {error: hiking_trip.errors.full_messages.join(';')}
+        end
+    end
+
 
     def hiking_trip_params
         params.permit(:hiking_project_id, :name, :start_date, :end_date, :description)

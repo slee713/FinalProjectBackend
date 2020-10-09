@@ -1,7 +1,7 @@
 class Api::V1::HikingTripsController < ApplicationController
     def index
         hiking_trips = @user.hiking_trips
-        render json: hiking_trips
+        render json: hiking_trips, include: [:users, :stops, :group_gear_items]
     end
 
     def show

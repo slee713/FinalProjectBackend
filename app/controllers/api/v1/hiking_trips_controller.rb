@@ -14,7 +14,7 @@ class Api::V1::HikingTripsController < ApplicationController
 
         if hiking_trip.valid?
             hiking_trip.save
-            user_hikes = User.create(user: @user, hiking_trip: hiking_trip)
+            user_hike = UserHike.create(user: @user, hiking_trip: hiking_trip)
             render json: hiking_trip, include: [:users => {except: [:created_at, :updated_at]}, :stops => {except: [:created_at, :updated_at]}, 
                                                 :group_gear_items => {except: [:created_at, :updated_at]}]
         else 

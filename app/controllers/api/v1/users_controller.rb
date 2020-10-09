@@ -6,7 +6,7 @@ class Api::V1::UsersController < ApplicationController
         user = User.new(user_params)
         if user.valid?
             user.save
-            render json: {username: user.username, token: encode_token({user_id: user.id})}, status: 200
+            render json: {id: user.id, token: encode_token({user_id: user.id})}, status: 200
         else
             render json: {error: user.errors.full_messages}, status: :not_acceptable
         end

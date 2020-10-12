@@ -4,7 +4,8 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :users, only: [:create]
       resources :hiking_trips
-      resources :group_gear_items
+      resources :group_gear_items, only: [:create, :update, :destroy]
+      resources :personal_gear_items, only: [:create, :update, :destroy]
       post '/login', to: 'auth#create'
     end
   end

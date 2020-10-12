@@ -8,7 +8,7 @@ class Api::V1::UsersController < ApplicationController
             user.save
             render json: {id: user.id, token: encode_token({user_id: user.id})}, status: 200
         else
-            render json: {error: user.errors.full_messages}, status: :not_acceptable
+            render json: {error: user.errors.full_messages.join(';')}, status: :not_acceptable
         end
     end
 

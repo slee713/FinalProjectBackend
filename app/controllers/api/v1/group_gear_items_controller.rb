@@ -12,7 +12,7 @@ class Api::V1::GroupGearItemsController < ApplicationController
             item.save
             render json: item
         else 
-            render json: {error: 'Unable to Create Item'}
+            render json: {error: item.errors.full_messages.join(';')}
         end
     end
 
@@ -24,7 +24,7 @@ class Api::V1::GroupGearItemsController < ApplicationController
             item.save
             render json: item
         else
-            render json: {error: 'Unable to Update item'}
+            render json: {error: item.errors.full_messages.join(';')}
         end
     end
 

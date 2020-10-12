@@ -18,7 +18,24 @@ class Api::V1::FoodPlansController < ApplicationController
             foodPlan.save
             render json: foodPlan
         else 
-            render json: {error: 'Unable to Create Food Plan'}
+            render json: {error: foodPlan.errors.full_messages.join(';')}
         end
+    end
+
+    def update
+        foodPlan = FoodPlan.find(params[:id])
+        foodPlan.assign_attributes(params.permit(:day, :breakfast, :lunch, :dinner, :snacks, :notes))
+
+        if foodPlan.valid?
+            foodPlan.save
+            render json: foodPlan
+        else
+            render json: {error: foodPlan.errors.full_messages.join(';')}
+        end
+    end
+
+    def destroy
+        foodPlan = FoodPlan.find(params[:id])
+        foodPlan.destroy
     end
 end

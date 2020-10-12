@@ -1,6 +1,7 @@
 class Api::V1::GroupGearItemsController < ApplicationController
     def create
-        userHike = UserHike.find(params[:hiking_trip_id].to_i)
+        userHike = UserHike.find_by(user_id: @user.id , hiking_trip_id: params[:hiking_trip_id].to_i)
+       
         item = GroupGearItem.new(
             name: params[:name],
             qty: params[:qty],
@@ -11,7 +12,7 @@ class Api::V1::GroupGearItemsController < ApplicationController
             item.save
             render json: item
         else 
-            render json: {error: item.errors.full_messages.join(';')}
+            render json: {error: 'Unable to Create Item'}
         end
     end
 
@@ -23,7 +24,7 @@ class Api::V1::GroupGearItemsController < ApplicationController
             item.save
             render json: item
         else
-            render json: {error: item.errors.full_messages.join(';')}
+            render json: {error: 'Unable to Update item'}
         end
     end
 

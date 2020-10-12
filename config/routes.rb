@@ -6,6 +6,7 @@ Rails.application.routes.draw do
       resources :hiking_trips
       resources :group_gear_items, only: [:create, :update, :destroy]
       resources :personal_gear_items, only: [:create, :update, :destroy]
+      resources :food_plans, only: [:create, :update, :destroy]
       post '/login', to: 'auth#create'
     end
   end

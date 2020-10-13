@@ -1,19 +1,19 @@
 class Api::V1::StopsController < ApplicationController
     def create
         hiking_trip= HikingTrip.find(params[:hiking_trip_id])
-        if hiking_trip.stops.find_by(stop: params[:stop])
+        if hiking_trip.stops.find_by(stop: params[:stop]).valid?
             render json: {error: "Stop Cant Be Created With the Same Number"}
         else 
             stop = Stop.new(stop_params)
-        end
         
-        if stop.valid?
-            stop.save
-            render json: stop,  except: [:updated_at, :created_at]
-        else
-            render json: {error: stop.errors.full_messages.join(';')}
+        
+            if stop.valid?
+                stop.save
+                render json: stop,  except: [:updated_at, :created_at]
+            else
+                render json: {error: stop.errors.full_messages.join(';')}
+            end
         end
-
     end
 
     def update

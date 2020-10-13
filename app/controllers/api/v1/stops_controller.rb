@@ -4,7 +4,7 @@ class Api::V1::StopsController < ApplicationController
 
         if stop.valid?
             stop.save
-            render json: stop
+            render json: stop,  except: [:updated_at, :created_at]
         else
             render json: {error: stop.errors.full_messages.join(';')}
         end
@@ -17,7 +17,7 @@ class Api::V1::StopsController < ApplicationController
 
         if stop.valid?
             stop.save
-            render json: stop
+            render json: stop,  except: [:updated_at, :created_at]
         else 
             render json: {error: stop.errors.full_messages.join(';')}
         end

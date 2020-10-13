@@ -16,7 +16,7 @@ class Api::V1::FoodPlansController < ApplicationController
 
         if foodPlan.valid?
             foodPlan.save
-            render json: foodPlan
+            render json: foodPlan, except: [:updated_at, :created_at]
         else 
             render json: {error: foodPlan.errors.full_messages.join(';')}
         end
@@ -28,7 +28,7 @@ class Api::V1::FoodPlansController < ApplicationController
 
         if foodPlan.valid?
             foodPlan.save
-            render json: foodPlan
+            render json: foodPlan, except: [:updated_at, :created_at]
         else
             render json: {error: foodPlan.errors.full_messages.join(';')}
         end

@@ -4,9 +4,14 @@ class Api::V1::AuthController < ApplicationController
     def create
         user = User.find_by(username: params[:username])
         if user && user.authenticate(params[:password])
-            render json: {user: user, token: encode_token({user_id: user.id})}, 
-                            include: [:friends, :personal_gear_items, :food_plans],
-                            status: 200
+            render json: {user: user, token: encode_token({user_id: user.id})},
+                        except: [:password_digest,:created_at, :updated_at ],
+                        include: [
+                            :friends => {except: [:password_digest, :created_at, :updated_at]}, 
+                            :personal_gear_items => {except: [:created_at, :updated_at]}, 
+                            :food_plans => {except: [:created_at, :updated_at]}
+                        ],
+                        status:200
         else
             render json: {error: 'Invalid Credentials'}
         end

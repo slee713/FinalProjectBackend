@@ -5,7 +5,7 @@ class Api::V1::PersonalGearItemsController < ApplicationController
 
         if item.valid?
             item.save
-            render json: item
+            render json: item,  except: [:updated_at, :created_at]
         else 
             render json: {error: item.errors.full_messages.join(';')}
         end
@@ -18,7 +18,7 @@ class Api::V1::PersonalGearItemsController < ApplicationController
 
         if item.valid?
             item.save
-            render json: item
+            render json: item,  except: [:updated_at, :created_at]
         else 
             render json: {error: item.errors.full_messages.join(';')}
         end

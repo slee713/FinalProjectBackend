@@ -4,21 +4,26 @@ class Api::V1::FoodPlansController < ApplicationController
         
         userHike = UserHike.find_by(user_id: @user.id, hiking_trip_id: params[:hiking_trip_id].to_i)
         
-        foodPlan = FoodPlan.new(
-            user_hike_id: userHike.id,
-            day: params[:day],
-            breakfast: params[:breakfast],
-            lunch: params[:lunch],
-            dinner: params[:dinner],
-            snacks: params[:snacks],
-            notes: params[:notes]
-        )
+        if @user.food_plans.find_by(day: params[:day]).valid?
+            render json: {error: "Food Plan for #{params[:day]} Already Exists"}
+        else
 
-        if foodPlan.valid?
-            foodPlan.save
-            render json: foodPlan, except: [:updated_at, :created_at]
-        else 
-            render json: {error: foodPlan.errors.full_messages.join(';')}
+            foodPlan = FoodPlan.new(
+                user_hike_id: userHike.id,
+                day: params[:day],
+                breakfast: params[:breakfast],
+                lunch: params[:lunch],
+                dinner: params[:dinner],
+                snacks: params[:snacks],
+                notes: params[:notes]
+            )
+
+            if foodPlan.valid?
+                foodPlan.save
+                render json: foodPlan, except: [:updated_at, :created_at]
+            else 
+                render json: {error: foodPlan.errors.full_messages.join(';')}
+            end
         end
     end
 

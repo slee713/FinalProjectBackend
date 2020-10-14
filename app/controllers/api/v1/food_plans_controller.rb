@@ -4,7 +4,7 @@ class Api::V1::FoodPlansController < ApplicationController
         
         userHike = UserHike.find_by(user_id: @user.id, hiking_trip_id: params[:hiking_trip_id].to_i)
         
-        if @user.food_plans.find_by(day: params[:day]).valid?
+        if @user.food_plans.find_by(day: params[:day])
             render json: {error: "Food Plan for #{params[:day]} Already Exists"}
         else
 

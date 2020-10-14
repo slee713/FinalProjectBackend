@@ -1,7 +1,7 @@
 class Api::V1::StopsController < ApplicationController
     def create
         hiking_trip= HikingTrip.find(params[:hiking_trip_id])
-        if hiking_trip.stops.find_by(stop: params[:stop]).valid?
+        if hiking_trip.stops.find_by(stop: params[:stop])
             render json: {error: "Stop Cant Be Created With the Same Number"}
         else 
             stop = Stop.new(stop_params)

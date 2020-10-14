@@ -21,4 +21,19 @@ class User < ApplicationRecord
     validates :username, :password, :email, :first_name, :last_name, presence: true
     validates :username, uniqueness: {case_sensitive: false}
     validates :email, uniqueness: {case_sensitive: false} 
+
+
+    def nonFriends
+        friends = self.friends
+        nonFriends = User.all.find_all { | user| !friends.include?(user) && user!= self}
+        return nonFriends
+    end
+
+    def friendRequests
+        friend_ids = self.friends.map{|friend| friend.id}
+        friendships = Friendship.where(friend_id: self.id)
+        friendRequests = friendships.find_all { |friendship| !friend_ids.include?(friendship.user_id)}
+        return friendRequests
+    end
+
 end

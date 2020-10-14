@@ -1,6 +1,14 @@
 class Api::V1::UsersController < ApplicationController
     skip_before_action :logged_in?, only: [:create]
 
+    def index
+        # grab all users that are not friends with current user
+        users = @user.nonFriends
+        
+
+        render json: users, except: [:password_digest, :created_at, :updated_at]
+    end
+
     def create
         
         user = User.new(user_params)

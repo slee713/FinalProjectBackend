@@ -9,6 +9,17 @@ class Api::V1::UsersController < ApplicationController
         render json: users, except: [:password_digest, :created_at, :updated_at]
     end
 
+    def show
+        user = User.find(params[:id])
+        render json: user, except: [:password_digest, :created_at, :updated_at],
+                            include: [
+                                :friends => {except: [:password_digest, :created_at, :updated_at]}, 
+                                :personal_gear_items => {except: [:created_at, :updated_at]}, 
+                                :food_plans => {except: [:created_at, :updated_at]}
+                            ],
+                            status: 200
+    end 
+
     def create
         
         user = User.new(user_params)

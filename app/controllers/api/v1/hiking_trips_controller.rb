@@ -50,6 +50,11 @@ class Api::V1::HikingTripsController < ApplicationController
         end
     end
 
+    def destroy
+        hiking_trip = HikingTrip.find(params[:id])
+        hiking_trip.destroy
+    end
+
 
     def hiking_trip_params
         params.permit(:hiking_project_id, :name, :start_date, :end_date, :description)

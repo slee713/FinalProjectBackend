@@ -11,6 +11,7 @@ Rails.application.routes.draw do
       resources :user_hikes, only: [:create, :destroy] 
       resources :stops, only: [:create, :update, :destroy]
       resources :friendships, only: [:index, :create, :destroy]
+      resources :messages, only: [:index, :create]
       post '/login', to: 'auth#create'
       delete '/friendships', to: 'friendships#remove_friend'
     end

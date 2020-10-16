@@ -4,5 +4,6 @@ class UserHike < ApplicationRecord
 
     has_many :food_plans
     has_many :group_gear_items
+    has_many :messages
     
 end

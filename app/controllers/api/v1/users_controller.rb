@@ -15,7 +15,7 @@ class Api::V1::UsersController < ApplicationController
                             include: [
                                 :friends => {except: [:password_digest, :created_at, :updated_at]}, 
                                 :personal_gear_items => {except: [:created_at, :updated_at]}, 
-                                :food_plans => {except: [:created_at, :updated_at]}
+                                :food_plans => {include: [:user_hike],except: [:created_at, :updated_at]}
                             ],
                             status: 200
     end 

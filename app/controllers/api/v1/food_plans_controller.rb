@@ -4,7 +4,7 @@ class Api::V1::FoodPlansController < ApplicationController
         
         userHike = UserHike.find_by(user_id: @user.id, hiking_trip_id: params[:hiking_trip_id].to_i)
         
-        if @user.food_plans.find_by(day: params[:day])
+        if userHike.food_plans.find_by(day: params[:day])
             render json: {error: "Food Plan for #{params[:day]} Already Exists"}
         else
 
@@ -20,7 +20,7 @@ class Api::V1::FoodPlansController < ApplicationController
 
             if foodPlan.valid?
                 foodPlan.save
-                render json: foodPlan, except: [:updated_at, :created_at]
+                render json: foodPlan, include: [:user_hike], except: [:updated_at, :created_at]
             else 
                 render json: {error: foodPlan.errors.full_messages.join(';')}
             end
@@ -33,7 +33,7 @@ class Api::V1::FoodPlansController < ApplicationController
 
         if foodPlan.valid?
             foodPlan.save
-            render json: foodPlan, except: [:updated_at, :created_at]
+            render json: foodPlan, include: [:user_hike], except: [:updated_at, :created_at]
         else
             render json: {error: foodPlan.errors.full_messages.join(';')}
         end

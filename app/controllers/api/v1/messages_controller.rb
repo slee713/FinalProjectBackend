@@ -1,7 +1,7 @@
 class Api::V1::MessagesController < ApplicationController
   def index
-    userHike = UserHike.find_by(user_id: @user.id, hiking_trip_id: params[:hiking_trip_id])
-    messages = Message.where(user_hike_id: userHike.id).sort_by(&:created_at)
+    hiking_trip = HikingTrip.find(params[:hiking_trip_id])
+    messages = hiking_trip.messages.sort_by(&:created_at)
 
     render json: messages, include: [:user_hike => {include: [:user]}]
   end

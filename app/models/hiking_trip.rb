@@ -2,6 +2,7 @@ class HikingTrip < ApplicationRecord
     has_many :user_hikes, :dependent => :destroy
     has_many :users, through: :user_hikes
     has_many :group_gear_items, through: :user_hikes, :dependent => :destroy
+    has_many :messages, through: :user_hikes, :dependent => :destroy
     has_many :stops, :dependent => :destroy
 
 

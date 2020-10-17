@@ -5,7 +5,7 @@ class Api::V1::HikingTripsController < ApplicationController
                                 include: [
                                     :users => {except: [:password_digest, :created_at, :updated_at]}, 
                                     :stops => {except: [:created_at, :updated_at]}, 
-                                    :group_gear_items  => {except: [:created_at, :updated_at]}
+                                    :group_gear_items  => {include: [:user_hike  => {include: [:user => {except: [:password_digest, :updated_at, :created_at]} ]}], except: [:created_at, :updated_at]}
                                 ]
     end
 
@@ -14,7 +14,7 @@ class Api::V1::HikingTripsController < ApplicationController
         render json: hiking_trip, include: [
                                         :users => {except: [:password_digest, :created_at, :updated_at]}, 
                                         :stops => {except: [:created_at, :updated_at]}, 
-                                        :group_gear_items  => {except: [:created_at, :updated_at]}
+                                        :group_gear_items  => {include: [:user_hike  => {include: [:user  => {except: [:password_digest, :updated_at, :created_at]}]}] ,except: [:created_at, :updated_at]}
                                     ]
     end
 
@@ -27,7 +27,7 @@ class Api::V1::HikingTripsController < ApplicationController
             render json: hiking_trip, include: [
                                             :users => {except: [:created_at, :updated_at]}, 
                                             :stops => {except: [:created_at, :updated_at]}, 
-                                            :group_gear_items => {except: [:created_at, :updated_at]}
+                                            :group_gear_items => {include: [:user_hike  => {include: [:user => {except: [:password_digest, :updated_at, :created_at]} ]}], except: [:created_at, :updated_at]}
                                         ]
         else 
             render json: {error: hiking_trip.errors.full_messages.join(';')}   
@@ -43,7 +43,7 @@ class Api::V1::HikingTripsController < ApplicationController
             render json: hiking_trip, include: [
                                             :users => {except: [:created_at, :updated_at]}, 
                                             :stops => {except: [:created_at, :updated_at]}, 
-                                            :group_gear_items => {except: [:created_at, :updated_at]}
+                                            :group_gear_items => {include: [:user_hike => {include: [:user  => {except: [:password_digest, :updated_at, :created_at]}]}], except: [:created_at, :updated_at]}
                                         ]
         else 
             render json: {error: hiking_trip.errors.full_messages.join(';')}

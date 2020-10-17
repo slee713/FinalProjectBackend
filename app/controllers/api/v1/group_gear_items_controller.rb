@@ -10,7 +10,7 @@ class Api::V1::GroupGearItemsController < ApplicationController
         )
         if item.valid?
             item.save
-            render json: item,  except: [:updated_at, :created_at]
+            render json: item ,  include: [:user_hike  => {include: [:user  => {except: [:password_digest, :updated_at, :created_at]}]}] , except: [:updated_at, :created_at]
         else 
             render json: {error: item.errors.full_messages.join(';')}
         end
@@ -22,7 +22,7 @@ class Api::V1::GroupGearItemsController < ApplicationController
 
         if item.valid?
             item.save
-            render json: item,  except: [:updated_at, :created_at]
+            render json: item,  include: [:user_hike  => {include: [:user  => {except: [:password_digest, :updated_at, :created_at]}]}] , except: [:updated_at, :created_at]
         else
             render json: {error: item.errors.full_messages.join(';')}
         end

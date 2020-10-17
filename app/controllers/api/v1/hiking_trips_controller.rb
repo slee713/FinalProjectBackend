@@ -9,6 +9,15 @@ class Api::V1::HikingTripsController < ApplicationController
                                 ]
     end
 
+    def friends_trips
+        friends_trips = @user.friendTrips.sort_by(&:start_date)
+
+        render json: friends_trips, except: [:created_at, :updated_at],
+                                    include: [
+                                        :users => {except: [:password_digest, :created_at,:updated_at]},
+                                    ]
+    end
+
     def show
         hiking_trip = HikingTrip.find(params[:id])
         render json: hiking_trip, include: [

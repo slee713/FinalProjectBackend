@@ -12,6 +12,7 @@ Rails.application.routes.draw do
       resources :stops, only: [:create, :update, :destroy]
       resources :friendships, only: [:index, :create, :destroy]
       resources :messages, only: [:index, :create]
+      get '/friendsTrips', to: 'hiking_trips#friends_trips'
       post '/login', to: 'auth#create'
       delete '/friendships', to: 'friendships#remove_friend'
     end

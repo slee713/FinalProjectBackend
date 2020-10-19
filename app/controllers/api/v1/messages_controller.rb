@@ -1,9 +1,21 @@
 class Api::V1::MessagesController < ApplicationController
   def index
     hiking_trip = HikingTrip.find(params[:hiking_trip_id])
-    messages = hiking_trip.messages.sort_by(&:created_at)
+    messages = hiking_trip.messages.sort_by(&:created_at).reverse
+    count = messages.count
+    page = params[:page].to_i
 
-    render json: messages, include: [:user_hike => {include: [:user]}]
+    if count <=25 
+      messages = messages 
+      render json: messages, include: [:user_hike => {include: [:user]}]
+    elsif (page -1)*25 < count
+      messages = messages.slice((page-1)*25, 25)
+      render json: messages, include: [:user_hike => {include: [:user]}]
+    else
+      render json: {error: "No More Messages"}
+    end
+
+    # render json: messages, include: [:user_hike => {include: [:user]}]
   end
 
   def create

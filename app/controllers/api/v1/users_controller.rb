@@ -15,7 +15,7 @@ class Api::V1::UsersController < ApplicationController
         if users.length > 0
             render json: users, except: [:password_digest, :created_at, :updated_at]
         else 
-            render json: { error: "User not found. Please search by first name, username or email."}
+            render json: { error: "No users found. Please search by first name, username or email."}
         end
     end
 

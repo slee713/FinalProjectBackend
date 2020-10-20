@@ -18,6 +18,14 @@ class Api::V1::MessagesController < ApplicationController
     # render json: messages, include: [:user_hike => {include: [:user]}]
   end
 
+  def show
+    hiking_trip = HikingTrip.find(params[:hiking_trip_id])
+
+    message = hiking_trip.messages.last
+
+    render json: message, include: [:user_hike => {include: [:user]}]
+  end
+
   def create
     userHike = UserHike.find_by(user_id: @user.id, hiking_trip_id: params[:hiking_trip_id])
     message = Message.new(user_hike_id: userHike.id, content: params[:content])

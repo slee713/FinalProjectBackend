@@ -5,17 +5,17 @@ class Api::V1::MessagesController < ApplicationController
     count = messages.count
     page = params[:page].to_i
 
-    if count <=25 
-      messages = messages 
-      render json: messages, include: [:user_hike => {include: [:user]}]
-    elsif (page -1)*25 < count
-      messages = messages.slice((page-1)*25, 25)
-      render json: messages, include: [:user_hike => {include: [:user]}]
-    else
-      render json: {error: "No More Messages"}
-    end
+    # if count <=25 
+    #   messages = messages 
+    #   render json: messages, include: [:user_hike => {include: [:user]}]
+    # elsif (page -1)*25 < count
+    #   messages = messages.slice((page-1)*25, 25)
+    #   render json: messages, include: [:user_hike => {include: [:user]}]
+    # else
+    #   render json: {error: "No More Messages"}
+    # end
 
-    # render json: messages, include: [:user_hike => {include: [:user]}]
+    render json: messages, include: [:user_hike => {include: [:user]}]
   end
 
   def create

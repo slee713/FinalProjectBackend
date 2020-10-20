@@ -5,8 +5,18 @@ class Api::V1::UsersController < ApplicationController
         # grab all users that are not friends with current user
         users = @user.nonFriends
         
+        users_by_username = users.find_all{|user| user.username.downcase.include?(params[:search]) }
+        users_by_first_name= users.find_all{|user| user.first_name.downcase.include?(params[:search]) }
+        users_by_email = users.find_all{|user| user.email.include?(params[:search])}
 
-        render json: users, except: [:password_digest, :created_at, :updated_at]
+        users = [*users_by_username, *users_by_first_name, *users_by_email].uniq
+
+    
+        if users.length > 0
+            render json: users, except: [:password_digest, :created_at, :updated_at]
+        else 
+            render json: { error: "User not found. Please search by first name, username or email."}
+        end
     end
 
     def show

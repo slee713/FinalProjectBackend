@@ -21,7 +21,7 @@ class Api::V1::MessagesController < ApplicationController
   def show
     hiking_trip = HikingTrip.find(params[:hiking_trip_id])
 
-    message = hiking_trip.messages.last
+    message = hiking_trip.messages[-1]
 
     render json: message, include: [:user_hike => {include: [:user]}]
   end

@@ -1,5 +1,5 @@
 class Api::V1::UsersController < ApplicationController
-    skip_before_action :logged_in?, only: [:create]
+    skip_before_action :logged_in?, only: [:create, :update]
 
     def index
         # grab all users that are not friends with current user
@@ -46,6 +46,34 @@ class Api::V1::UsersController < ApplicationController
         else
             render json: {error: user.errors.full_messages.join(';')}, status: :not_acceptable
         end
+    end
+
+    def update
+        user = User.find(params[:id])
+        if user.authenticate(params[:password])
+            user.assign_attributes(user_params)
+
+            if user.valid?
+                user.save
+                render json: user, 
+                except: [:password_digest,:created_at, :updated_at ],
+                include: [
+                    :friends => {except: [:password_digest, :created_at, :updated_at]}, 
+                    :personal_gear_items => {except: [:created_at, :updated_at]}, 
+                    :food_plans => {except: [:created_at, :updated_at]}
+                ],
+                status: 200
+            else
+                render json: {error: user.errors.full_messages.join(';')}
+            end
+        else
+            render json: {error: "Password is Incorrect"}
+        end
+    end
+
+    def destroy
+        user = User.find(params[:id])
+        user.destroy
     end
 
 

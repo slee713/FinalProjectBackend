@@ -29,7 +29,7 @@ class Api::V1::HikingTripsController < ApplicationController
 
     def create 
         hiking_trip = HikingTrip.new(hiking_trip_params)
-        byebug
+       
         if hiking_trip.valid?
             hiking_trip.save
             user_hike = UserHike.create(user: @user, hiking_trip: hiking_trip)

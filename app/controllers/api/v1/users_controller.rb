@@ -10,7 +10,7 @@ class Api::V1::UsersController < ApplicationController
         users_by_email = users.find_all{|user| user.email.include?(params[:search])}
 
         users = [*users_by_username, *users_by_first_name, *users_by_email].uniq
-
+        
     
         if users.length > 0
             render json: users, except: [:password_digest, :created_at, :updated_at]
